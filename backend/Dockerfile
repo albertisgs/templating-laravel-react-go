@@ -15,13 +15,14 @@ RUN apk update && apk add --no-cache \
     && docker-php-ext-install gd pdo pdo_pgsql zip bcmath
 
 # Install Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+COPY --from=composer:2.2 /usr/bin/composer /usr/bin/composer
 
 # Copy kode aplikasi
 COPY . .
 
-# Install dependensi Composer
+# # Install dependensi Composer
 RUN composer install --no-interaction --no-plugins --no-scripts
+#better composer diinstal secara local. atau jika punya imaged didocker gas aja install
 
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
